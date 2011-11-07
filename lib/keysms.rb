@@ -137,8 +137,3 @@ end
 
 class InternalError < SMSError; end
 end
-# test
-keysms = Keysms::KeySMS.new()
-keysms.authenticate("40604088", "f5a306219de3f50abc6d59d62aa6cfa") #5
-retval = keysms.sms("Dette er en test", "40604088")
-p retval
