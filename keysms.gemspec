@@ -5,20 +5,18 @@ require "keysms/version"
 Gem::Specification.new do |s|
   s.name        = "keysms"
   s.version     = Keysms::VERSION
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
-
-  s.rubyforge_project = "keysms"
+  s.authors     = ["Ricco Førgaard"]
+  s.email       = ["ricco@fiskeben.dk"]
+  s.homepage    = "http://fiskeben.dk/keysms"
+  s.summary     = %q{Send text messages to mobile phones using the KeySMS gateway.}
+  s.description = %q{This gem wraps the API for the SMS gateway KeySMS run by the Norwegian company Keyteq.}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  # specify any dependencies here; for example:
-  # s.add_development_dependency "rspec"
-  # s.add_runtime_dependency "rest-client"
+  s.add_dependency "json"
+  s.add_dependency "digest/md5"
+  s.add_dependency "patron"
 end
