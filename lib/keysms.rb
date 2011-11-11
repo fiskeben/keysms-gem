@@ -6,8 +6,8 @@ require 'digest/md5'
 require 'json'
 require 'patron'
 
-class KeySMS
-  attr_accessor :options, :payload, :values, :result
+class KeyteqService
+  attr_accessor :result
   
   def initialize(url = "http://app.keysms.no", options = {})
     @options, @payload, @values = {}, {}, {}
@@ -19,24 +19,9 @@ class KeySMS
     @options[:auth] = {}
     @options[:auth][:username] = username
     @options[:auth][:key] = key
+    self
   end
-  
-  def sms(message, receivers, options = {})
-    @options = @options.merge(options)
-    @options[:path] = "/messages"
     
-    if (receivers.is_a? String)
-      receivers = [receivers]
-    end
-    
-    @payload[:message] = message
-    @payload[:receivers] = receivers
-    
-    prepare_request
-    prepare_session
-    send
-  end
-  
   private
   
   def prepare_session
@@ -54,7 +39,7 @@ class KeySMS
     Digest::MD5.hexdigest(@payload.to_json + @options[:auth][:key])
   end
   
-  def send
+  def call
     data = @values.collect do | key, value |
       "#{key}=#{value}"
     end
@@ -98,7 +83,37 @@ class KeySMS
       end
     end
   end
- 
+  
+end
+
+class SMS < KeyteqService
+  def send(message, receivers, options = {})
+    @options = @options.merge(options)
+    @options[:path] = "/messages"
+
+    if (receivers.is_a? String)
+      receivers = [receivers]
+    end
+
+    @payload[:message] = message
+    @payload[:receivers] = receivers
+
+    prepare_request
+    prepare_session
+    call
+  end
+end
+
+class Info < KeyteqService
+  def info
+    @options[:path] = "/auth/current.json"
+    @payload[:user] = true
+    @payload[:account] = true
+    
+    prepare_request
+    prepare_session
+    call
+  end
 end
 
 class SMSError < StandardError
