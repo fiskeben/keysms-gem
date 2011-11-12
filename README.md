@@ -1,10 +1,13 @@
 # KeySMS Ruby gem
 
-The KeySMS gem is a Ruby gem for sending SMS messages through the Norwegian SMS gateway, KeySMS.
+The KeySMS gem is a Ruby gem for sending SMS messages through the Norwegian SMS gateway, [KeySMS][official].
 
-If you just need to run the gem, it's much easier just to install the gem:
+If you just need to run the gem, it's much easier just to [install the gem][gem]:
 
-    gem install keysms
+> gem install keysms
+
+[official]: http://keysms.no
+[gem]: https://rubygems.org/gems/keysms
 
 ## Requirements
 
@@ -14,11 +17,13 @@ In order to use KeySMS, you need to register as a user and get an API key from K
 
 To send an SMS:
 
- * Create a new instance of the SMS sender: sms = Keysms::SMS.new
- * Authenticate using your username and API key: sms.authenticate(username, key)
- * Send your message: sms.send(your_message, receivers)
+ * Create a new instance of the SMS sender: `sms = Keysms::SMS.new`
+ * Authenticate using your username and API key: `sms.authenticate(username, key)`
+ * Send your message: `sms.send(your_message, receivers)`
 
 Receivers can either be a single phone number (string) or a list of receivers.
+
+### Errors
 
 KeySMS will raise an exception if something goes wrong:
 
